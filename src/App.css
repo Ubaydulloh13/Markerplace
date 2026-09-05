@@ -8,4 +8,88 @@
 @media(max-width:540px){.cartItem{grid-template-columns:55px 1fr 25px}.cartItem>strong{display:none}.filters{display:block}.filters select{margin-top:12px;width:100%}.aboutStats{grid-template-columns:1fr;gap:15px}.profileMenu{margin:18px 0}.authBox h2{font-size:27px}}
 .productAdd{grid-template-columns:155px 1fr 180px auto;align-items:center}.uploadPhoto label{height:105px;border:1.5px dashed #bdb9e5;border-radius:11px;background:#f7f6ff;display:grid;place-items:center;overflow:hidden;cursor:pointer;margin:0}.uploadPhoto label>span{display:flex;flex-direction:column;align-items:center;font-size:25px;color:#6557e8}.uploadPhoto label small{font-size:9px;margin-top:5px}.uploadPhoto input{display:none}.uploadPhoto img{width:100%;height:100%;object-fit:cover}.uploadPhoto>button{border:0;background:none;color:#d44960;font-size:9px;width:100%;margin-top:4px}
 @media(max-width:540px){.productAdd{grid-template-columns:1fr}.uploadPhoto label{height:180px}}
+
+@media(max-width:600px){
+	html,body,#root{max-width:100%;overflow-x:hidden}
+	header{padding:0 10px;gap:7px}
+	header .logoButton{flex:0 0 auto}
+	header .siteLogo{gap:6px}
+	header .siteLogo>strong{font-size:19px}
+	header .siteLogo>i{width:30px;height:30px;border-radius:9px}
+	.search{height:40px;flex:1;min-width:0}
+	.search span{font-size:20px;padding-left:9px}
+	.search input{font-size:12px;padding:0 7px;min-width:0}
+	.actions{gap:1px}
+	.actions button{font-size:17px;min-width:29px;padding:3px 2px}
+	.hero{margin:10px;border-radius:17px;min-height:0}
+	.hero>div:first-child{padding:31px 21px 25px}
+	.hero h1{font-size:clamp(32px,10vw,42px);letter-spacing:-1.8px;margin:11px 0}
+	.hero p{font-size:13px;line-height:1.55;margin:0 0 18px}
+	.hero .primary,.hero .ghost{min-height:44px;padding:0 14px;font-size:11px}
+	.trust{gap:17px;margin-top:25px}
+	.trust b{font-size:17px}
+	.catSec,.products{padding:0 10px}
+	.title{align-items:flex-start;gap:10px}
+	.title h2,.prodHead h2{font-size:22px;letter-spacing:-.5px}
+	.title button{font-size:10px;padding:8px 0}
+	.cats{gap:8px}
+	.cats button{min-height:92px;padding:12px 8px;border-radius:12px}
+	.cats button i{font-size:20px}
+	.cats button b{font-size:11px}
+	.cats button small{font-size:9px}
+	.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+	.card{min-width:0;border-radius:12px}
+	.pic{height:auto;aspect-ratio:1.08;min-height:0}
+	.info{padding:9px}
+	.info small{font-size:9px}
+	.info h3{font-size:12px;line-height:1.3;height:31px;overflow:hidden;margin:5px 0}
+	.rating{font-size:9px;white-space:nowrap;overflow:hidden}
+	.price strong{font-size:12px}
+	.price del{font-size:9px}
+	.price button{width:28px;height:28px;font-size:18px}
+	.seller{margin:28px 10px;padding:25px 20px;border-radius:16px}
+	.seller h2{font-size:24px;line-height:1.15}
+	footer{padding:30px 18px 22px;gap:16px}
+	footer nav{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+	.subpage{padding:20px 10px}
+	.pageTitle h1{font-size:25px}
+	.filters{padding:12px 0}
+	.filters>div{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+	.filters button{flex:0 0 auto;white-space:nowrap;padding:9px 11px;font-size:10px}
+	.checkout{padding:18px 14px;border-radius:14px}
+	.checkout input,.checkout textarea,.checkout select{font-size:13px;min-height:44px}
+	.checkout textarea{min-height:95px}
+	.cartItem{padding:10px 0;gap:9px}
+	.cartItem img{width:55px;height:55px}
+	.cartItem>div b{font-size:11px;line-height:1.3}
+	.cartItem>div small{font-size:9px}
+	.summary{padding:16px;border-radius:13px}
+	.profilePage{padding:20px 14px}
+	.profileMenu button{min-height:47px;padding:12px 10px;font-size:11px}
+	.manage{padding:15px 12px;border-radius:13px}
+	.manage h2{font-size:20px}
+	.dashHead h1{font-size:25px}
+	.stats{gap:8px}
+	.stats>div{padding:13px 10px;min-width:0}
+	.stats>div b{font-size:18px}
+	.productAdd{gap:10px}
+	.row{gap:8px;padding:10px 0}
+	.row img{width:45px;height:45px}
+	.detail{width:calc(100% - 20px);border-radius:16px}
+	.detail>img{height:190px}
+	.detail>div{padding:18px}
+}
+
+@media(max-width:380px){
+	header .siteLogo>strong{display:none}
+	header .siteLogo>i{width:32px;height:32px}
+	.actions button{font-size:16px;min-width:27px}
+	.hero .ghost{display:none}
+	.cats{gap:6px}
+	.cats button{min-height:86px}
+	.trust{gap:11px}
+	.trust b{font-size:15px}
+	.trust b small{font-size:8px}
+	.aa-account-summary{padding:11px}
+}
 .socialDetail{max-width:940px}.socialDetail>div{max-height:540px;overflow:auto}.detailTabs{display:flex;gap:6px;border-bottom:1px solid #eee;padding-bottom:9px}.detailTabs button{border:0;background:#f3f3f7;border-radius:7px;padding:8px 10px;font-size:10px}.detailTabs button.active{background:#6557e8;color:#fff}.thread{display:flex;flex-direction:column;gap:8px;min-height:180px}.thread form{display:flex;gap:6px;margin-top:auto}.thread input{flex:1;border:1px solid #dddde8;border-radius:9px;padding:10px;outline:none}.thread form button{border:0;background:#6557e8;color:#fff;border-radius:8px;padding:0 14px}.review{background:#f7f7fa;border-radius:9px;padding:10px}.review p{margin:4px 0;font-size:11px}.chatName{font-size:11px;font-weight:700;color:#319c72}.bubble{align-self:flex-start;background:#f0f0f4;border-radius:12px 12px 12px 3px;padding:9px 12px;font-size:11px;max-width:80%}.bubble.mine{align-self:flex-end;background:#6557e8;color:#fff;border-radius:12px 12px 3px 12px}.demoWarning{background:#fff7df;color:#896a10;padding:12px;border-radius:8px;font-size:11px}.simpleRow>div{flex:1}.simpleRow>div small{display:block;color:#999;margin-top:4px}

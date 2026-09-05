@@ -5,7 +5,7 @@
       "name": "samushakirov@gmail.com",
       "email": "samushakirov@gmail.com",
       "phone": "909052948",
-      "password": "1988",
+      "password": "6080e96978802d95bf1db5a08ae4cb40:5813b6b4c77d9980a715f92f9f4cf362133923957bef8852de7074db490242cd15bb6fee268f0c1513ff92ce26b16652f18de6bda36a8670e801ee9c6b0d03a4",
       "role": "seller",
       "createdAt": "2026-09-03T04:38:29.612Z"
     },
@@ -353,6 +353,7 @@
       "clientId": "6ea57745-8d7c-4dad-8872-04b0dfca135f"
     }
   ],
+  "adminPassword": null,
   "walletMigrations": {
     "user:admin": "2026-09-05T05:45:06.529Z"
   }
