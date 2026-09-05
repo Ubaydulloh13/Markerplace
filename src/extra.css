@@ -1,0 +1,6 @@
+.accountRow{display:grid;grid-template-columns:42px 1fr 100px 140px;gap:12px;align-items:center;padding:13px;border-bottom:1px solid #eee}
+.accountAvatar{width:36px;height:36px;border-radius:10px;background:#efedff;color:#6557e8;display:grid;place-items:center;font-weight:800}
+.accountRow small{display:block;color:#999;margin-top:3px}
+.accountRow code{font-size:10px;color:#888}
+.securityNote{background:#eef6ff;color:#43627e;padding:12px;border-radius:9px;font-size:10px}
+@media(max-width:600px){.accountRow{grid-template-columns:40px 1fr}.accountRow>.roleTag,.accountRow>code{grid-column:2}.socialDetail{grid-template-columns:1fr;max-height:94vh;overflow:auto}.socialDetail>img{height:240px}}

@@ -1,0 +1,359 @@
+{
+  "users": [
+    {
+      "id": 1788410309612,
+      "name": "samushakirov@gmail.com",
+      "email": "samushakirov@gmail.com",
+      "phone": "909052948",
+      "password": "1988",
+      "role": "seller",
+      "createdAt": "2026-09-03T04:38:29.612Z"
+    },
+    {
+      "id": 1788412312072,
+      "name": "samushakirov@gmail.com",
+      "email": "samug",
+      "phone": "909052948",
+      "password": "9c9a5117ba02fa9a6ad1956c75ce6f75:7ef0c69cdb27446c85402838460533f8bc6e723bdfe19f91d1f5343814aafa98564358e20bde375d7d2c6832af13a7df53bf9da4edbbbb4e540ae361f33502ff",
+      "role": "seller",
+      "createdAt": "2026-09-03T05:11:52.119Z"
+    },
+    {
+      "id": 1788584974898,
+      "name": "Shaxzod",
+      "email": "Fozilov",
+      "phone": "9775468",
+      "password": "cb213fa6dd3ac1ce2f29771fc1d41792:ae00944e1190b9c5d33abd4370b4b13efb6db32ae56e08362c8fda06be625376f22ef3705b4a27c6939602db7a0105e5ae23eeff8851516f52ed9fd7313f652a",
+      "role": "buyer",
+      "createdAt": "2026-09-05T05:09:34.944Z"
+    },
+    {
+      "id": 1788585073031,
+      "name": "Samu Shakirov",
+      "email": "samu",
+      "phone": "909052948",
+      "password": "15d31906e9cf1016acf14eb68d66c09a:944c4d3a35504694b662a6a8dca622ae3b09976f33d3812cb087ecf7974e2fcbd9afb424c036496f35fb7364188b555a40ad656d2d5b94ce54755e48d3332829",
+      "role": "seller",
+      "createdAt": "2026-09-05T05:11:13.087Z"
+    },
+    {
+      "id": "829beba6-e852-41ae-8c33-1fe1b89738df",
+      "name": "Doniyor",
+      "email": "Doniyor",
+      "phone": "97862342",
+      "password": "0f2fc1abc08ec4e4a64034bee39bf012:f94b2326a94e5a12989af13de573220b111d8497763ab37978bc0da9efa7e68e5e9d376b9bd7333e0bcc7a6f69bc4c7c73c19bb1b1fc170c42ef6d3e14523716",
+      "role": "buyer",
+      "createdAt": "2026-09-05T05:51:08.375Z"
+    }
+  ],
+  "orders": [
+    {
+      "userId": "admin",
+      "user": "Ubaydulloh",
+      "phone": "+998 90 000 20 13",
+      "address": "Боғистон кўчаси 14",
+      "payment": "Yetkazilganda naqd",
+      "total": 492000,
+      "items": [
+        {
+          "id": 1788409156701,
+          "name": "Usta qurollari chamadan",
+          "price": 123000,
+          "seller": "Ubaydulloh"
+        },
+        {
+          "id": 1788409156701,
+          "name": "Usta qurollari chamadan",
+          "price": 123000,
+          "seller": "Ubaydulloh"
+        },
+        {
+          "id": 1788409156701,
+          "name": "Usta qurollari chamadan",
+          "price": 123000,
+          "seller": "Ubaydulloh"
+        },
+        {
+          "id": 1788409156701,
+          "name": "Usta qurollari chamadan",
+          "price": 123000,
+          "seller": "Ubaydulloh"
+        }
+      ],
+      "id": 1788412197736,
+      "status": "Yangi",
+      "createdAt": "2026-09-03T05:09:57.736Z"
+    },
+    {
+      "userId": 1788412312072,
+      "user": "samushakirov@gmail.com",
+      "phone": "99999999",
+      "address": "Uchtepa\nBogiston",
+      "payment": "Yetkazilganda naqd",
+      "total": 90000,
+      "items": [
+        {
+          "id": 1788409343285,
+          "name": "bolalar uchun kichik idish",
+          "price": 34000,
+          "seller": "Samu Shakirov"
+        },
+        {
+          "id": 1788409322315,
+          "name": "Kulush naborlar toplami",
+          "price": 56000,
+          "seller": "Samu Shakirov"
+        }
+      ],
+      "id": 1788584911237,
+      "status": "Yangi",
+      "createdAt": "2026-09-05T05:08:31.237Z"
+    },
+    {
+      "userId": 1788585073031,
+      "user": "Samu Shakirov",
+      "phone": "909052948",
+      "address": "Uchtepa\nBogiston",
+      "payment": "Yetkazilganda naqd",
+      "total": 56000,
+      "items": [
+        {
+          "id": 1788409322315,
+          "name": "Kulush naborlar toplami",
+          "price": 56000,
+          "seller": "Samu Shakirov"
+        }
+      ],
+      "id": 1788585203092,
+      "status": "Yangi",
+      "createdAt": "2026-09-05T05:13:23.092Z"
+    },
+    {
+      "id": "75843d31-2364-4589-a749-938c6e1fbff4",
+      "userId": "admin",
+      "user": "Ubaydulloh",
+      "phone": "+998 90 000 20 13",
+      "address": "Uchtepa\nBogiston",
+      "payment": "Yetkazilganda naqd",
+      "total": 56000,
+      "items": [
+        {
+          "id": 1788409322315,
+          "name": "Kulush naborlar toplami",
+          "price": 56000,
+          "seller": "Samu Shakirov",
+          "sellerId": 1788585073031
+        }
+      ],
+      "status": "Yangi",
+      "createdAt": "2026-09-05T05:49:57.135Z"
+    }
+  ],
+  "sellerApplications": [
+    {
+      "userId": 1788410309612,
+      "name": "samushakirov@gmail.com",
+      "email": "samushakirov@gmail.com",
+      "shop": "Ronaldo",
+      "phone": "770777717",
+      "products": "Ronaldoni kalleksyalari sotiladi\n",
+      "id": 1788410665103,
+      "status": "approved",
+      "createdAt": "2026-09-03T04:44:25.103Z"
+    },
+    {
+      "userId": 1788412312072,
+      "name": "samushakirov@gmail.com",
+      "email": "samug",
+      "shop": "Sment",
+      "phone": "77756588",
+      "products": "qurilish smentlari",
+      "id": 1788412335689,
+      "status": "approved",
+      "createdAt": "2026-09-03T05:12:15.689Z"
+    },
+    {
+      "userId": 1788585073031,
+      "name": "Samu Shakirov",
+      "email": "samu",
+      "shop": "Choychaqa",
+      "phone": "99978732",
+      "products": "choy chaqalar uchun ideishlar",
+      "id": 1788585100648,
+      "status": "approved",
+      "createdAt": "2026-09-05T05:11:40.648Z"
+    }
+  ],
+  "reviews": [
+    {
+      "productId": 1788409322315,
+      "userId": 1788584974898,
+      "user": "Shaxzod",
+      "text": "zor ekan menga yoqdi",
+      "rating": 5,
+      "id": 1788584996918,
+      "createdAt": "2026-09-05T05:09:56.918Z"
+    }
+  ],
+  "messages": [
+    {
+      "userId": 1788584974898,
+      "user": "Shaxzod",
+      "seller": "Samu Shakirov",
+      "from": "Shaxzod",
+      "text": "Asalomu alaykum qarang buarni menga ham sota olasizmi menga ham kerak edi",
+      "id": 1788585015442,
+      "createdAt": "2026-09-05T05:10:15.442Z"
+    }
+  ],
+  "wallets": {
+    "Ubaydulloh": 492000,
+    "Samu Shakirov": 96000,
+    "user:admin": 492000,
+    "user:1788585073031": 56000
+  },
+  "withdrawals": [
+    {
+      "id": 1788585182557,
+      "seller": "Samu Shakirov",
+      "amount": 50000,
+      "status": "Demo yechildi",
+      "createdAt": "2026-09-05T05:13:02.557Z"
+    }
+  ],
+  "loginEvents": [
+    {
+      "id": "bb4811cd-1155-421c-9698-9b65563cc3a3",
+      "userId": "admin",
+      "name": "Ubaydulloh",
+      "login": "Ubaydulloh",
+      "role": "admin",
+      "type": "login",
+      "at": "2026-09-05T05:45:00.955Z"
+    },
+    {
+      "id": "c5e2eeb8-662c-4cca-93ef-ab7a29308ebc",
+      "userId": "admin",
+      "name": "Ubaydulloh",
+      "login": "Ubaydulloh",
+      "role": "admin",
+      "type": "login",
+      "at": "2026-09-05T05:49:48.271Z"
+    },
+    {
+      "id": "14a9184f-1ccf-4ea6-b076-e76b63aba536",
+      "userId": "829beba6-e852-41ae-8c33-1fe1b89738df",
+      "name": "Doniyor",
+      "login": "Doniyor",
+      "role": "buyer",
+      "type": "register",
+      "at": "2026-09-05T05:51:08.375Z"
+    },
+    {
+      "id": "d2399698-9951-4e7a-b0c7-999fdfe7131b",
+      "userId": "admin",
+      "name": "Ubaydulloh",
+      "login": "Ubaydulloh",
+      "role": "admin",
+      "type": "login",
+      "at": "2026-09-05T05:51:48.565Z"
+    },
+    {
+      "id": "01e3dd70-7646-4a91-b050-fec1fa8115a6",
+      "userId": "829beba6-e852-41ae-8c33-1fe1b89738df",
+      "name": "Doniyor",
+      "login": "Doniyor",
+      "role": "buyer",
+      "type": "login",
+      "at": "2026-09-05T05:52:13.136Z"
+    },
+    {
+      "id": "80d64982-f0b6-400e-a569-6b5467ec0b69",
+      "userId": "admin",
+      "name": "Ubaydulloh",
+      "login": "Ubaydulloh",
+      "role": "admin",
+      "type": "login",
+      "at": "2026-09-05T05:52:46.114Z"
+    },
+    {
+      "id": "123dbe79-cbe3-4743-84c3-70584f9c64a0",
+      "userId": "829beba6-e852-41ae-8c33-1fe1b89738df",
+      "name": "Doniyor",
+      "login": "Doniyor",
+      "role": "buyer",
+      "type": "login",
+      "at": "2026-09-05T05:55:00.880Z"
+    },
+    {
+      "id": "a25707b7-34c3-4bd0-9fdb-04b2de51cd20",
+      "userId": "admin",
+      "name": "Ubaydulloh",
+      "login": "Ubaydulloh",
+      "role": "admin",
+      "type": "login",
+      "at": "2026-09-05T05:55:15.318Z"
+    }
+  ],
+  "sessions": [
+    {
+      "tokenHash": "8c022e85e0d9fafce48a44afbe326dbb5f955454536dd97cb24d5b7ce5f11c95",
+      "userId": "admin",
+      "createdAt": "2026-09-05T05:55:15.318Z",
+      "expiresAt": "2026-10-05T05:55:15.318Z"
+    }
+  ],
+  "conversations": [
+    {
+      "id": "fb4d552e-ea9c-4791-bad8-94c62e80ae98",
+      "buyerId": 1788584974898,
+      "sellerId": 1788585073031,
+      "productId": null,
+      "productName": "",
+      "createdAt": "2026-09-05T05:45:00.955Z"
+    },
+    {
+      "id": "60f04e06-056e-4916-8c0b-ecad8de51604",
+      "buyerId": "829beba6-e852-41ae-8c33-1fe1b89738df",
+      "sellerId": "admin",
+      "productId": null,
+      "productName": "",
+      "createdAt": "2026-09-05T05:51:26.306Z"
+    }
+  ],
+  "chatMessages": [
+    {
+      "id": "48a2b992-3c4d-4bf9-8b20-c7689f7b6d4c",
+      "legacyId": 1788585015442,
+      "conversationId": "fb4d552e-ea9c-4791-bad8-94c62e80ae98",
+      "senderId": 1788584974898,
+      "senderName": "Shaxzod",
+      "text": "Asalomu alaykum qarang buarni menga ham sota olasizmi menga ham kerak edi",
+      "createdAt": "2026-09-05T05:10:15.442Z",
+      "readAt": null
+    },
+    {
+      "id": "c145e787-e70d-4418-9555-93bfd6be45f1",
+      "conversationId": "60f04e06-056e-4916-8c0b-ecad8de51604",
+      "senderId": "829beba6-e852-41ae-8c33-1fe1b89738df",
+      "senderName": "Doniyor",
+      "text": "ASalomu alay kum",
+      "createdAt": "2026-09-05T05:51:32.640Z",
+      "readAt": "2026-09-05T05:51:52.612Z",
+      "clientId": "4c09eacd-205d-48ec-89b6-1b0886d9e0a0"
+    },
+    {
+      "id": "8baade8c-387b-477b-9015-5fb6457e5c76",
+      "conversationId": "60f04e06-056e-4916-8c0b-ecad8de51604",
+      "senderId": "admin",
+      "senderName": "Ubaydulloh",
+      "text": "Vaelukum asslom",
+      "createdAt": "2026-09-05T05:52:01.109Z",
+      "readAt": "2026-09-05T05:52:15.846Z",
+      "clientId": "6ea57745-8d7c-4dad-8872-04b0dfca135f"
+    }
+  ],
+  "walletMigrations": {
+    "user:admin": "2026-09-05T05:45:06.529Z"
+  }
+}
