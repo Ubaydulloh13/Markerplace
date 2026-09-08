@@ -450,7 +450,7 @@ function send(res, response) {
     'X-Content-Type-Options': 'nosniff', ...response.headers})
   res.end(JSON.stringify(response.data))
 }
-const server = http.createServer(async (req, res) => {
+export const server = http.createServer(async (req, res) => {
   try {
     if (req.method === 'OPTIONS') return send(res, {status: 204, data: null})
     const url = new URL(req.url, 'http://localhost')
@@ -470,4 +470,6 @@ const server = http.createServer(async (req, res) => {
     send(res, {status: error.status || 500, data: {error: error.status ? error.message : 'Serverda xatolik yuz berdi. Qayta urinib ko‘ring.'}})
   }
 })
-server.listen(port, () => console.log(`Bozorly backend: http://localhost:${server.address().port}`))
+if (process.env.VERCEL !== '1') {
+  server.listen(port, () => console.log(`Bozorly backend: http://localhost:${server.address().port}`))
+}
