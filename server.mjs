@@ -2,7 +2,7 @@ import http from 'node:http'
 import {readFile, writeFile, mkdir, rename} from 'node:fs/promises'
 import {dirname, join, resolve} from 'node:path'
 import {fileURLToPath} from 'node:url'
-import {randomBytes, randomUUID, createHash, scryptSync, timingSafeEqual} from 'node:crypto'
+import {randomBytes, randomUUID, createHash, createHmac, scryptSync, timingSafeEqual} from 'node:crypto'
 
 const root = dirname(fileURLToPath(import.meta.url))
 const isVercel = process.env.VERCEL === '1'
@@ -11,6 +11,7 @@ const seedDbPath = join(root, 'data', 'db.json')
 const port = Number(process.env.PORT ?? 3001)
 const sessionName = 'bozor-session'
 const sessionLifetime = 30 * 24 * 60 * 60 * 1000
+const sessionSecret = process.env.SESSION_SECRET || 'bozorly-development-session-secret'
 const admin = {id: 'admin', name: 'Ubaydulloh', email: 'admin@bozorly.uz', phone: '+998 90 000 20 13', role: 'admin', createdAt: null}
 const empty = () => ({users: [], orders: [], sellerApplications: [], reviews: [], messages: [], wallets: {}, withdrawals: [], loginEvents: [], sessions: [], conversations: [], chatMessages: [], adminPassword: null})
 const sameId = (left, right) => left != null && right != null && String(left) === String(right)
@@ -105,9 +106,25 @@ const tokenHash = token => createHash('sha256').update(token).digest('hex')
 function cookieToken(req) {
   return req.headers.cookie?.split(';').map(part => part.trim()).find(part => part.startsWith(`${sessionName}=`))?.slice(sessionName.length + 1) || ''
 }
+function statelessSession(user) {
+  const payload = Buffer.from(JSON.stringify({id: user.id, name: user.name, email: user.email, phone: user.phone || '', role: user.role, exp: Date.now() + sessionLifetime})).toString('base64url')
+  const signature = createHmac('sha256', sessionSecret).update(payload).digest('base64url')
+  return `${payload}.${signature}`
+}
+function statelessUser(token) {
+  try {
+    const [payload, signature] = token.split('.')
+    if (!payload || !signature) return null
+    const expected = createHmac('sha256', sessionSecret).update(payload).digest('base64url')
+    if (signature.length !== expected.length || !timingSafeEqual(Buffer.from(signature), Buffer.from(expected))) return null
+    const user = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8'))
+    return user.exp > Date.now() && user.id && user.role ? user : null
+  } catch { return null }
+}
 function sessionUser(req, data) {
   const token = cookieToken(req)
   if (!token) return null
+  if (isVercel) return statelessUser(token)
   const session = data.sessions.find(item => item.tokenHash === tokenHash(token) && Date.parse(item.expiresAt) > Date.now())
   return session ? findUser(data, session.userId) : null
 }
@@ -121,7 +138,7 @@ function sessionCookie(token, expires = sessionLifetime) {
   return `${sessionName}=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${Math.floor(expires / 1000)}${process.env.NODE_ENV === 'production' ? '; Secure' : ''}`
 }
 function signIn(context, req, user, login, type) {
-  const token = randomBytes(32).toString('hex'), at = now(), oldHash = cookieToken(req) ? tokenHash(cookieToken(req)) : null
+  const token = isVercel ? statelessSession(user) : randomBytes(32).toString('hex'), at = now(), oldHash = cookieToken(req) ? tokenHash(cookieToken(req)) : null
   context.data.sessions = context.data.sessions.filter(session => Date.parse(session.expiresAt) > Date.now() && session.tokenHash !== oldHash)
   context.data.sessions.push({tokenHash: tokenHash(token), userId: user.id, createdAt: at, expiresAt: new Date(Date.now() + sessionLifetime).toISOString()})
   context.data.loginEvents.push({id: randomUUID(), userId: user.id, name: user.name, login, role: user.role, type, at})
