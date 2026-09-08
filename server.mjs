@@ -5,7 +5,9 @@ import {fileURLToPath} from 'node:url'
 import {randomBytes, randomUUID, createHash, scryptSync, timingSafeEqual} from 'node:crypto'
 
 const root = dirname(fileURLToPath(import.meta.url))
-const dbPath = process.env.BOZOR_DB_PATH ? resolve(process.env.BOZOR_DB_PATH) : join(root, 'data', 'db.json')
+const isVercel = process.env.VERCEL === '1'
+const dbPath = process.env.BOZOR_DB_PATH ? resolve(process.env.BOZOR_DB_PATH) : isVercel ? '/tmp/bozorly-db.json' : join(root, 'data', 'db.json')
+const seedDbPath = join(root, 'data', 'db.json')
 const port = Number(process.env.PORT ?? 3001)
 const sessionName = 'bozor-session'
 const sessionLifetime = 30 * 24 * 60 * 60 * 1000
@@ -36,7 +38,10 @@ async function readDatabase() {
     }
     return data
   } catch (error) {
-    if (error.code === 'ENOENT') return empty()
+    if (error.code === 'ENOENT') {
+      const seed = isVercel && dbPath !== seedDbPath ? await readFile(seedDbPath, 'utf8') : null
+      return {...empty(), ...(seed ? JSON.parse(seed) : {})}
+    }
     throw error
   }
 }
