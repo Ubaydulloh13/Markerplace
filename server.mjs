@@ -13,7 +13,7 @@ const sessionName = 'bozor-session'
 const sessionLifetime = 30 * 24 * 60 * 60 * 1000
 const sessionSecret = process.env.SESSION_SECRET || 'bozorly-development-session-secret'
 const admin = {id: 'admin', name: 'Ubaydulloh', email: 'admin@bozorly.uz', phone: '+998 90 000 20 13', role: 'admin', createdAt: null}
-const empty = () => ({users: [], orders: [], sellerApplications: [], reviews: [], messages: [], wallets: {}, withdrawals: [], loginEvents: [], sessions: [], conversations: [], chatMessages: [], adminPassword: null})
+const empty = () => ({users: [], products: [], orders: [], sellerApplications: [], reviews: [], messages: [], wallets: {}, withdrawals: [], loginEvents: [], sessions: [], conversations: [], chatMessages: [], adminPassword: null})
 const sameId = (left, right) => left != null && right != null && String(left) === String(right)
 const normalized = value => typeof value === 'string' ? value.trim().toLocaleLowerCase() : ''
 const now = () => new Date().toISOString()
@@ -34,7 +34,7 @@ const optionalText = (value, max = 200) => typeof value === 'string' ? value.tri
 async function readDatabase() {
   try {
     const data = {...empty(), ...JSON.parse(await readFile(dbPath, 'utf8'))}
-    for (const key of ['users', 'orders', 'sellerApplications', 'reviews', 'messages', 'withdrawals', 'loginEvents', 'sessions', 'conversations', 'chatMessages']) {
+    for (const key of ['users', 'products', 'orders', 'sellerApplications', 'reviews', 'messages', 'withdrawals', 'loginEvents', 'sessions', 'conversations', 'chatMessages']) {
       if (!Array.isArray(data[key])) fail(500, `Baza maydoni yaroqsiz: ${key}`)
     }
     return data
@@ -313,6 +313,32 @@ function route(req, url, payload, context) {
   if (method === 'GET' && path === '/api/shops') return result([
     {id: 'admin', sellerId: admin.id, sellerName: admin.name, name: 'Ubaydulloh', shop: 'Ubaydulloh'}, ...approvedShops(data),
   ])
+  if (method === 'GET' && path === '/api/products') return result(data.products)
+  if (method === 'POST' && path === '/api/products') {
+    if (!isSeller(user)) fail(403, 'Mahsulot qo‘shish uchun sotuvchi hisob kerak.')
+    const name = requiredText(payload.name, 'Mahsulot nomi', 200)
+    const price = Number(payload.price)
+    if (!Number.isSafeInteger(price) || price <= 0) fail(400, 'Mahsulot narxini to‘g‘ri kiriting.')
+    const clientId = optionalText(payload.clientId, 100)
+    const existing = clientId && data.products.find(item => sameId(item.sellerId, user.id) && item.clientId === clientId)
+    if (existing) return result(existing)
+    const product = {
+      id: randomUUID(), name, category: optionalText(payload.category, 100) || 'Boshqa', price,
+      old: 0, rating: '5.0', reviews: 0, stock: Number.isSafeInteger(Number(payload.stock)) && Number(payload.stock) > 0 ? Number(payload.stock) : 1,
+      seller: user.name, sellerId: user.id, image: optionalText(payload.image, 3500000), fallback: optionalText(payload.fallback, 300), custom: true, createdAt: now(), ...(clientId ? {clientId} : {}),
+    }
+    data.products.unshift(product)
+    context.changed = true
+    return result(product, 201)
+  }
+  if (method === 'DELETE' && path.startsWith('/api/products/')) {
+    const product = data.products.find(item => sameId(item.id, decodeURIComponent(path.split('/').pop())))
+    if (!product) fail(404, 'Mahsulot topilmadi.')
+    if (user.role !== 'admin' && !sameId(product.sellerId, user.id)) fail(403, 'Bu mahsulotni o‘chirishga ruxsat yo‘q.')
+    data.products = data.products.filter(item => item !== product)
+    context.changed = true
+    return result({ok: true})
+  }
   if (path === '/api/messages') fail(410, 'Chat yangilandi. Xabarlar bo‘limidan suhbatni oching.')
   if (method === 'GET' && path === '/api/conversations') return result(data.conversations
     .filter(conversation => sameId(conversation.buyerId, user.id) || sameId(conversation.sellerId, user.id))
