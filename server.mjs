@@ -20,6 +20,7 @@ const now = () => new Date().toISOString()
 const allUsers = data => [admin, ...data.users.filter(user => !sameId(user.id, admin.id))]
 const findUser = (data, id) => allUsers(data).find(user => sameId(user.id, id))
 const isSeller = user => user && ['admin', 'seller'].includes(user.role)
+let cachedDatabase = null
 
 class ApiError extends Error {
   constructor(status, message) { super(message); this.status = status }
@@ -32,16 +33,20 @@ const requiredText = (value, label, max = 200) => {
 const optionalText = (value, max = 200) => typeof value === 'string' ? value.trim().slice(0, max) : ''
 
 async function readDatabase() {
+  if (!isVercel && cachedDatabase) return cachedDatabase
   try {
     const data = {...empty(), ...JSON.parse(await readFile(dbPath, 'utf8'))}
     for (const key of ['users', 'products', 'orders', 'sellerApplications', 'reviews', 'messages', 'withdrawals', 'loginEvents', 'sessions', 'conversations', 'chatMessages']) {
       if (!Array.isArray(data[key])) fail(500, `Baza maydoni yaroqsiz: ${key}`)
     }
+    if (!isVercel) cachedDatabase = data
     return data
   } catch (error) {
     if (error.code === 'ENOENT') {
       const seed = isVercel && dbPath !== seedDbPath ? await readFile(seedDbPath, 'utf8') : null
-      return {...empty(), ...(seed ? JSON.parse(seed) : {})}
+      const data = {...empty(), ...(seed ? JSON.parse(seed) : {})}
+      if (!isVercel) cachedDatabase = data
+      return data
     }
     throw error
   }
@@ -54,6 +59,7 @@ async function saveDatabase(data) {
   const temporary = `${dbPath}.${process.pid}.tmp`
   await writeFile(temporary, JSON.stringify(data, null, 2), {mode: 0o600})
   await rename(temporary, dbPath)
+  if (!isVercel) cachedDatabase = data
 }
 let databaseQueue = Promise.resolve()
 function transaction(work) {
@@ -124,9 +130,44 @@ function statelessUser(token) {
 function sessionUser(req, data) {
   const token = cookieToken(req)
   if (!token) return null
-  if (isVercel) return statelessUser(token)
+  // The signed token proves identity, but authorization always comes from the
+  // database. This makes a seller approval effective immediately on Vercel
+  // instead of keeping the old "buyer" role until the next login.
+  if (isVercel) {
+    const signed = statelessUser(token)
+    return signed ? findUser(data, signed.id) : null
+  }
   const session = data.sessions.find(item => item.tokenHash === tokenHash(token) && Date.parse(item.expiresAt) > Date.now())
   return session ? findUser(data, session.userId) : null
+}
+
+const eventClients = new Set()
+function broadcastChange() {
+  const payload = `event: change\ndata: ${JSON.stringify({at: now()})}\n\n`
+  for (const client of eventClients) {
+    try { client.write(payload) } catch { eventClients.delete(client) }
+  }
+}
+function openEventStream(req, res, data) {
+  requireUser(req, data)
+  res.writeHead(200, {
+    'Content-Type': 'text/event-stream; charset=utf-8',
+    'Cache-Control': 'no-cache, no-transform',
+    Connection: 'keep-alive',
+    'X-Accel-Buffering': 'no',
+  })
+  // Serverless functions cannot keep a socket open indefinitely. Ask the
+  // browser to reconnect slowly there; normal polling remains the fallback.
+  if (isVercel) {
+    res.end(`retry: 20000\nevent: ready\ndata: ${JSON.stringify({ok: true})}\n\n`)
+    return
+  }
+  res.write(`event: ready\ndata: ${JSON.stringify({ok: true})}\n\n`)
+  eventClients.add(res)
+  const heartbeat = setInterval(() => {
+    try { res.write(': keep-alive\n\n') } catch { clearInterval(heartbeat); eventClients.delete(res) }
+  }, 20000)
+  req.on('close', () => { clearInterval(heartbeat); eventClients.delete(res) })
 }
 function requireUser(req, data, role) {
   const user = sessionUser(req, data)
@@ -378,7 +419,10 @@ function route(req, url, payload, context) {
   if (method === 'POST' && path === '/api/seller-applications') {
     if (isSeller(user)) fail(409, 'Sotuvchi kabinetingiz allaqachon tayyor.')
     const shop = requiredText(payload.shop, 'Do‘kon nomi', 100), phone = requiredText(payload.phone, 'Telefon', 40), products = requiredText(payload.products, 'Mahsulotlar', 1000)
+    const phoneDigits = phone.replace(/\D/g, '')
+    if (phoneDigits.length < 7 || phoneDigits.length > 15) fail(400, 'Telefon raqamini to‘g‘ri kiriting.')
     if (data.sellerApplications.some(app => sameId(app.userId, user.id) && app.status === 'pending')) fail(409, 'Arizangiz tekshirilmoqda.')
+    if (data.sellerApplications.some(app => app.status !== 'rejected' && normalized(app.shop) === normalized(shop))) fail(409, 'Bu do‘kon nomi band. Boshqa nom tanlang.')
     const application = {id: randomUUID(), userId: user.id, name: user.name, email: user.email, shop, phone, products, status: 'pending', createdAt: now()}
     data.sellerApplications.push(application)
     context.changed = true
@@ -502,6 +546,11 @@ export const server = http.createServer(async (req, res) => {
   try {
     if (req.method === 'OPTIONS') return send(res, {status: 204, data: null})
     const url = new URL(req.url, 'http://localhost')
+    if (req.method === 'GET' && url.pathname === '/api/events') {
+      const data = await readDatabase()
+      openEventStream(req, res, data)
+      return
+    }
     if (['POST', 'PATCH', 'PUT', 'DELETE'].includes(req.method)) {
       if (req.headers['sec-fetch-site'] === 'cross-site') fail(403, 'Boshqa saytdan so‘rov qabul qilinmaydi.')
       if (req.headers.origin) {
@@ -512,7 +561,9 @@ export const server = http.createServer(async (req, res) => {
       if (req.headers['content-type'] && !req.headers['content-type'].toLowerCase().startsWith('application/json')) fail(415, 'Content-Type application/json bo‘lsin.')
     }
     const payload = ['POST', 'PATCH', 'PUT'].includes(req.method) ? await readBody(req) : {}
-    send(res, await transaction(context => route(req, url, payload, context)))
+    const response = await transaction(context => route(req, url, payload, context))
+    send(res, response)
+    if (['POST', 'PATCH', 'PUT', 'DELETE'].includes(req.method)) broadcastChange()
   } catch (error) {
     if (!error.status) console.error('Bozorly API:', error)
     send(res, {status: error.status || 500, data: {error: error.status ? error.message : 'Serverda xatolik yuz berdi. Qayta urinib ko‘ring.'}})

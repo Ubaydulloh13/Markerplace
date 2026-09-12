@@ -93,3 +93,42 @@
 	.aa-account-summary{padding:11px}
 }
 .socialDetail{max-width:940px}.socialDetail>div{max-height:540px;overflow:auto}.detailTabs{display:flex;gap:6px;border-bottom:1px solid #eee;padding-bottom:9px}.detailTabs button{border:0;background:#f3f3f7;border-radius:7px;padding:8px 10px;font-size:10px}.detailTabs button.active{background:#6557e8;color:#fff}.thread{display:flex;flex-direction:column;gap:8px;min-height:180px}.thread form{display:flex;gap:6px;margin-top:auto}.thread input{flex:1;border:1px solid #dddde8;border-radius:9px;padding:10px;outline:none}.thread form button{border:0;background:#6557e8;color:#fff;border-radius:8px;padding:0 14px}.review{background:#f7f7fa;border-radius:9px;padding:10px}.review p{margin:4px 0;font-size:11px}.chatName{font-size:11px;font-weight:700;color:#319c72}.bubble{align-self:flex-start;background:#f0f0f4;border-radius:12px 12px 12px 3px;padding:9px 12px;font-size:11px;max-width:80%}.bubble.mine{align-self:flex-end;background:#6557e8;color:#fff;border-radius:12px 12px 3px 12px}.demoWarning{background:#fff7df;color:#896a10;padding:12px;border-radius:8px;font-size:11px}.simpleRow>div{flex:1}.simpleRow>div small{display:block;color:#999;margin-top:4px}
+
+button,select{cursor:pointer}button{transition:transform .16s ease,box-shadow .16s ease,background-color .16s ease}button:active:not(:disabled){transform:scale(.97)}
+.primary,.catalog,.search button{background:linear-gradient(135deg,#7769ef,#574ad4);color:#fff;box-shadow:0 10px 24px #6254de35}.primary:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 14px 28px #6254de4a}
+.topLanguage,.languagePicker,.panelLanguage{display:flex!important;align-items:center;gap:7px}.topLanguage select,.languagePicker select,.panelLanguage select{border:1px solid #ddd9f4;background:#fff;color:#5549c2;border-radius:9px;padding:6px 8px;font-weight:800}.authTop{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}.authTop>.siteLogo{display:inline-flex!important;margin:0!important}.languagePicker{font-size:10px!important;margin:0!important}.languagePicker select{margin:0!important;width:auto!important;padding:8px!important}.panelLanguage{margin-top:auto;color:#aaaabd;font-size:10px;padding:10px}.panelLanguage select{margin-left:auto;background:#292a46;color:#fff;border-color:#444564}.panelLanguage+.back{margin-top:4px}
+header{box-shadow:0 5px 22px #2c27520a}.actions button{min-width:48px;color:#38364a;border-radius:12px;padding:7px 5px}.actions button:hover{background:#f3f1ff;color:#5a4dd2}.card{box-shadow:0 5px 18px #312b5707}.price button:hover{background:#6557e8;color:#fff;transform:scale(1.06)}
+.profileMenu button:hover{border-color:#dcd6ff;background:#f8f7ff;transform:translateX(3px)}.application{border:1px solid #eeeaf6;border-radius:12px;margin:9px 0;background:#fff;flex-wrap:wrap}.application button{font-weight:800;padding:10px 12px}.sellerApplication{box-shadow:0 18px 55px #2d28550c;padding:30px}.applicationIcon{width:60px;height:60px;display:grid;place-items:center;margin:0 auto 12px;border-radius:18px;background:#eeeaff;color:#6254dd;font-size:28px}.sellerApplication h2{text-align:center}.approvedBox>i,.pendingBox>i{width:70px;height:70px;display:grid;place-items:center;margin:auto;border-radius:50%;font-size:34px}.approvedBox>i{background:#ddf9ed;color:#159268}.pendingBox>i{background:#fff4d5;color:#a77b0a}.statusRefresh{border:1px solid #ddd8f5;background:#f5f3ff;color:#5e51d3;border-radius:10px;padding:11px 15px;font-weight:750}
+.mobileDock{display:none}
+@media(max-width:600px){.storeShell{padding-bottom:76px}.storeShell header .actions{display:none}.mobileDock{position:fixed;display:grid;grid-template-columns:repeat(5,1fr);left:10px;right:10px;bottom:max(9px,env(safe-area-inset-bottom));z-index:45;background:#ffffffef;border:1px solid #e9e7f0;border-radius:20px;padding:7px 6px;box-shadow:0 14px 38px #1c19384a;backdrop-filter:blur(18px)}.mobileDock button{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:0;background:transparent;color:#848194;border-radius:14px;min-height:50px;padding:5px 2px}.mobileDock button span{font-size:20px;line-height:1}.mobileDock button small{font-size:8px;font-weight:750}.mobileDock button.active{color:#5e50d5;background:#efedff}.mobileDock button i{position:absolute;top:1px;right:calc(50% - 20px);min-width:16px;height:16px;padding:2px;border-radius:9px;background:#f04f70;color:#fff;font:normal 8px sans-serif}.toast{bottom:88px}footer{padding-bottom:95px}}
+
+/* Footer links and mobile bottom navigation */
+footer nav{display:flex;justify-content:flex-end;align-items:center;gap:8px;flex-wrap:wrap}
+footer nav button{border:1px solid #ffffff17;background:#ffffff09;color:#d8d8e5;border-radius:999px;padding:10px 15px;font:700 11px Manrope,sans-serif;letter-spacing:.15px}
+footer nav button:hover{color:#fff;border-color:#796cf0;background:#6658db;box-shadow:0 8px 22px #08091855;transform:translateY(-2px)}
+footer nav button:focus-visible,.mobileDock button:focus-visible{outline:3px solid #9e94ff;outline-offset:3px}
+
+@media(max-width:600px){
+ footer nav{display:grid;grid-template-columns:1fr 1fr;text-align:left}
+ footer nav button{min-height:42px;text-align:left;padding:10px 13px}
+ .storeShell{padding-bottom:92px}
+ .mobileDock{left:12px;right:12px;bottom:max(10px,env(safe-area-inset-bottom));min-height:68px;padding:7px 8px 6px;border:1px solid #ffffff;background:linear-gradient(180deg,#fffffff7,#f7f6fff2);border-radius:24px;box-shadow:0 18px 50px #24204435,0 3px 12px #29244918;backdrop-filter:blur(22px) saturate(165%);-webkit-backdrop-filter:blur(22px) saturate(165%)}
+ .mobileDock button{isolation:isolate;min-width:0;min-height:56px;gap:3px;padding:3px 1px;color:#8b8999;background:transparent;border-radius:17px}
+ .mobileDock button::before{content:'';position:absolute;top:-8px;left:50%;width:0;height:3px;border-radius:0 0 5px 5px;background:linear-gradient(90deg,#806fff,#5547d0);transform:translateX(-50%);transition:width .22s ease}
+ .mobileDock button span{width:34px;height:34px;display:grid;place-items:center;border-radius:12px;transition:transform .2s ease,background .2s ease,box-shadow .2s ease,color .2s ease}
+ .mobileDock button span svg{width:22px;height:22px;display:block}
+ .mobileDock button small{max-width:100%;overflow:hidden;text-overflow:ellipsis;font:750 9px/1.15 Manrope,sans-serif;white-space:nowrap;transition:color .2s ease}
+ .mobileDock button.active{color:#594bd0;background:transparent}
+ .mobileDock button.active::before{width:28px}
+ .mobileDock button.active span{color:#fff;background:linear-gradient(145deg,#7c6df2,#5547cf);box-shadow:0 8px 18px #6154da4d;transform:translateY(-2px)}
+ .mobileDock button:hover:not(.active) span{color:#6154d5;background:#efedff}
+ .mobileDock button:active:not(:disabled) span{transform:scale(.9)}
+ .mobileDock button i{top:0;right:calc(50% - 25px);min-width:18px;height:18px;display:grid;place-items:center;padding:0 4px;border:2px solid #fff;border-radius:10px;background:linear-gradient(145deg,#ff6d82,#e83d61);box-shadow:0 3px 8px #dc35574d;font:800 8px/1 Manrope,sans-serif;z-index:2}
+ .toast{bottom:100px}
+}
+
+@media(max-width:370px){
+ .mobileDock{left:7px;right:7px;padding-inline:5px}
+ .mobileDock button small{font-size:8px}
+ .mobileDock button span{width:32px;height:32px}
+}
